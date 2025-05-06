@@ -1,23 +1,14 @@
 {
-  "name": "shinigamiapi",
+  "name": "anipixel-scraper",
   "version": "1.0.0",
-  "description": "API para obter filmes e animes",
-  "main": "index.js",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "vercel build",
-    "start": "vercel start"
+    "start": "vercel dev"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12",
-    "node-fetch": "^2.6.1"
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0-rc.12"
   },
   "devDependencies": {
-    "vercel": "^41.7.0"
-  },
-  "engines": {
-    "node": "14.x"
-  },
-  "author": "Deymeson",
-  "license": "MIT"
+    "vercel": "^32.5.6"
+  }
 }
