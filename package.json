@@ -12,9 +12,6 @@
     "cheerio": "^1.0.0-rc.12",
     "node-fetch": "^3.3.2"
   },
-  "devDependencies": {
-    "vercel": "^29.5.0"
-  },
   "keywords": [
     "api",
     "jsoup",
@@ -23,6 +20,6 @@
     "filmes",
     "scraping"
   ],
-  "author": "Seu Nome",
+  "author": "Deymeson",
   "license": "MIT"
 }
