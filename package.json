@@ -1,25 +1,23 @@
 {
-  "name": "anipixel-api",
+  "name": "shinigamiapi",
   "version": "1.0.0",
-  "description": "API para extrair dados de animes e filmes do site anipixel.app usando cheerio.",
+  "description": "API para obter filmes e animes",
   "main": "index.js",
   "scripts": {
     "dev": "vercel dev",
-    "start": "node index.js"
+    "build": "vercel build",
+    "start": "vercel start"
   },
-  "type": "module",
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^2.6.1"
   },
-  "keywords": [
-    "api",
-    "jsoup",
-    "cheerio",
-    "animes",
-    "filmes",
-    "scraping"
-  ],
+  "devDependencies": {
+    "vercel": "^41.7.0"
+  },
+  "engines": {
+    "node": "14.x"
+  },
   "author": "Deymeson",
   "license": "MIT"
 }
