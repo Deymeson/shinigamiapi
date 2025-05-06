@@ -1,0 +1,28 @@
+{
+  "name": "anipixel-api",
+  "version": "1.0.0",
+  "description": "API para extrair dados de animes e filmes do site anipixel.app usando cheerio.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "node index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "vercel": "^29.5.0"
+  },
+  "keywords": [
+    "api",
+    "jsoup",
+    "cheerio",
+    "animes",
+    "filmes",
+    "scraping"
+  ],
+  "author": "Seu Nome",
+  "license": "MIT"
+}
