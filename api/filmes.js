@@ -1,75 +1,33 @@
-import cheerio from 'cheerio';
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
+const cheerio = require('cheerio');
 
-export default async function handler(req, res) {
-  const url = 'https://anipixel.app/';
-
+module.exports = async (req, res) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch("https://anipixel.app");
     const html = await response.text();
     const $ = cheerio.load(html);
 
-    const filmesInfoList = [];
+    const filmesDiv = $('div.topList.mb-3.px-1:has(h5:contains("Filmes"))').parent();
+    const filmes = [];
 
-    const filmesDiv = $('div.topList.mb-3.px-1').filter((_, el) => {
-      return $(el).find('h5').text().toLowerCase().includes('filmes');
-    }).first();
+    filmesDiv.find('div.swiper-slide.item.poster').each((_, el) => {
+      const element = $(el);
 
-    if (filmesDiv.length > 0) {
-      const filmesElements = filmesDiv.parent().find('div.swiper-slide.item.poster');
+      const link = element.find("a.btn.free.fw-bold").attr("href") || "";
+      const tags = element.find("p.tags span").toArray().map(tag => $(tag).text());
+      const capa = element.find("div.content").attr("style")?.match(/url["']?(.*?)["']?/)?.[1] || "";
+      const titulo = element.find("h6").text().trim();
 
-      filmesElements.each((_, el) => {
-        const item = $(el);
-        const link = item.find('a.btn.free.fw-bold').attr('href') || '';
+      const tipo = tags[0]?.toLowerCase().includes("temporadas") ? "anime" : "filme";
+      const duracao = tags[0] || "";
+      const ano = tags[1] || "";
+      const imdb = tags.find(t => t.toLowerCase().includes("imdb")) || "";
 
-        const tags = item.find('p.tags span');
-        let tipo = '';
-        let duracao = '';
-        let ano = '';
-        let imdb = '';
+      filmes.push({ link, titulo, capa, imdb, ano, duracao, tipo });
+    });
 
-        if (tags.length > 0) {
-          const primeiraTag = $(tags[0]).text();
-          if (primeiraTag.toLowerCase().includes('temporadas')) {
-            tipo = 'anime';
-            duracao = primeiraTag;
-            ano = tags.eq(1).text() || '';
-          } else if (primeiraTag.toLowerCase().includes('min')) {
-            tipo = 'filme';
-            duracao = primeiraTag;
-            ano = tags.eq(1).text() || '';
-          }
-        }
-
-        tags.each((_, tag) => {
-          const txt = $(tag).text();
-          if (txt.toLowerCase().includes('imdb')) {
-            imdb = txt;
-          }
-        });
-
-        const capaStyle = item.find('div.content').attr('style') || '';
-        const capa = capaStyle.split('url(')[1]?.split(')')[0]?.replace(/"/g, '') || '';
-
-        const titulo = item.find('h6').text().trim();
-
-        filmesInfoList.push({
-          link,
-          titulo,
-          capa,
-          imdb,
-          ano,
-          duracao,
-          tipo
-        });
-      });
-
-      res.status(200).json(filmesInfoList);
-    } else {
-      res.status(404).json({ erro: 'Seção de filmes não encontrada.' });
-    }
-
+    res.status(200).json(filmes);
   } catch (e) {
-    res.status(500).json({ erro: 'Erro ao acessar ou processar a página de filmes.' });
+    res.status(500).json({ erro: "Erro ao buscar filmes", detalhes: e.message });
   }
-                         }
+};
