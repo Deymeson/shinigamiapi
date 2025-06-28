@@ -1,16 +1,9 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "api/*.js",
-      "use": "@vercel/node"
-    }
+    { "src": "api/mais-vistos.js", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1",
-      "methods": ["GET"]
-    }
+    { "src": "/api/mais-vistos", "dest": "/api/mais-vistos.js" }
   ]
 }
